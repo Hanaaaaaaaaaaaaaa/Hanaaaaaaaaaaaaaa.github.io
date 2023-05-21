@@ -1,0 +1,172 @@
+<?xml version="1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<head>
+	<link name="DFKaiSB" type="font" subtype="opentype" src="https://7228383-sb1.app.netsuite.com/core/media/media.nl?id=983&amp;c=7228383_SB1&amp;h=c1Pk2VuZ4hKlwqXPjDB4dwyw2q6DqUXrzoloNG7WYPaQrn2-&amp;_xt=.ttf" src-bold="https://7228383-sb1.app.netsuite.com/core/media/media.nl?id=983&amp;c=7228383_SB1&amp;h=c1Pk2VuZ4hKlwqXPjDB4dwyw2q6DqUXrzoloNG7WYPaQrn2-&amp;_xt=.ttf" bytes="2" />
+  
+    <macrolist>
+        <macro id="nlheader">
+            <table class="header" style="width: 100%;"><tr>
+	<td rowspan="5" style="width: 255px; vertical-align: top;" ></td>
+	<td rowspan="5" style="width: 393px; vertical-align: top;"><span style="font-size:12px;"><span class="nameandaddress">${companyInformation.companyName}<br />${companyInformation.addressText}</span></span><br /><span style="font-size:11px;">${record.vatregnum}</span></td>
+	<td align="right" style="height: 25px; width: 393px;"><span class="title">撿貨票</span></td>
+	</tr>
+	<tr>
+	<td align="right" style="height: 20px;"><span class="title_en">Picking List</span></td>
+	</tr>
+	<tr>
+	<td align="right"><span class="number">#</span>${record.tranid}</td>
+	</tr>
+	<tr>
+	<td align="right">${record.trandate}</td>
+	</tr></table>
+        </macro>
+        <macro id="nlfooter">
+            <table class="footer" style="width: 100%;"><tr>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	</tr>
+	<tr>
+	<td align="left"><barcode codetype="code128" showtext="true" value="${record.tranid}"/></td>
+	<td align="center" style="vertical-align:middle"><pagenumber/> of <totalpages/></td>
+   <td align="right"><span style="font-size:10px;">表單編號(Form No.)：X-XX-005/XX(X)</span></td>
+	</tr></table>
+        </macro>
+    </macrolist>
+    <style type="text/css">
+      * {
+		<#if .locale == "zh_CN">
+			font-family: Times, DFKaiSB;
+		<#elseif .locale == "zh_TW">
+			font-family: Times, DFKaiSB;
+		<#else>
+			font-family: Times, DFKaiSB;
+		</#if>
+		}
+		table {
+			font-size: 14pt;
+			table-layout: fixed;
+		}
+		th {
+			/*font-weight: bold;*/
+			font-size: 12pt;
+			vertical-align: middle;
+            padding: 5px 6px 3px 6px;
+            background-color: #e3e3e3;
+			color: #333333;
+		}
+		td {
+            padding: 4px 6px;
+        }
+		td p { align:left }
+		b {
+			/*font-weight: Semibold;*/
+			color: #333333;
+		}
+		table.header td {
+			padding: 0;
+			font-size: 12pt;
+		}
+		table.footer td {
+			padding: 0;
+			font-size: 10pt;
+		}
+		table.itemtable th {
+			padding-bottom: 10px;
+			padding-top: 10px;
+		}
+		table.body td {
+			padding-top: 10px;
+        padding-bottom: 10px;
+		}
+		td.addressheader {
+			font-size: 12pt;
+			padding-top: 6px;
+			padding-bottom: 2px;
+		}
+		td.address {
+			padding-top: 0;
+		}
+		span.title {
+			font-size: 20pt;
+		}
+      span.title_en {
+			font-size: 12pt;
+		}
+		span.number {
+			font-size: 12pt;
+		}
+		span.itemname {
+			/*font-weight: bold;*/
+			line-height: 150%;
+		}
+		hr {
+			width: 100%;
+			color: #d3d3d3;
+			background-color: #d3d3d3;
+			height: 1px;
+		}
+</style>
+</head>
+<body header="nlheader" header-height="11%" footer="nlfooter" footer-height="20pt" padding="0.5in 0.5in 0.5in 0.5in" size="Letter-LANDSCAPE">
+    <table style="width: 1059px; margin-top: 10px;"><tr>
+      <td class="addressheader" style="width: 344px;"><span style="font-size:14px;">${record.shipaddress@label}&nbsp;<span style="font-size:12px;">Ship to</span></span></td>
+      <td class="addressheader" style="width: 319px;"><span style="font-size:14px;">備忘錄<span style="font-size:12px;"> Remark</span></span></td>
+      <td class="addressheader" style="width: 342px;"><span style="font-size:14px;">類別<span style="font-size:12px;"> Class</span></span></td>
+	</tr>
+	<tr>
+	<td class="address" style="width: 344px;"><span style="font-size:14px;">${record.shipaddress}</span></td>
+	<td class="address" style="width: 319px;"><span style="font-size:14px;">${record.memo}</span></td>
+   <td class="address" style="width: 319px;"><span style="font-size:14px;">${record.class}</span></td>
+	</tr></table>
+
+<table class="body" style="width: 100%; margin-top: 10px;"><tr>
+  <th style="text-align: left;"><span style="font-size:14px;">${record.shipmethod@label}&nbsp;<span style="font-size:10px;">Shipping Method</span></span></th>
+	</tr>
+	<tr>
+	<td><span style="font-size:14px;">${record.shipmethod}</span></td>
+	</tr></table>
+<#if record.item?has_content>
+
+<table class="itemtable" style="width: 100%; margin-top: 10px;"><!-- start items --><#list record.item as item><#if item_index==0>
+<thead>
+	<tr>
+	<th colspan="4" style="width: 300px;">${item.item@label}<br /><span style="font-size:10px;">Item</span></th>
+	<th colspan="2" rowspan="1" style="width: 221px;">${item.description@label}<br /><span style="font-size:10px;">Description</span></th>
+	<th style="width: 100px;">批號<br /><span style="font-size:10px;">Lot No.</span></th>
+	<th style="width: 100px;">${item.quantity@label}<br /><span style="font-size:10px;">Quantity</span></th>
+	<th style="width: 47px;">${item.units@label}<br /><span style="font-size:10px;">Units</span></th>
+	<th style="width: 100px;">${item.quantitycommitted@label}<br /><span style="font-size:10px;">Quantity Commited</span></th>
+	</tr>
+</thead>
+</#if><tr>
+	<td colspan="4" style="width: 379px;"><span style="font-size:14px;"><span class="itemname">${item.item}</span></span><br /><span style="font-size:14px;">${item.description}</span></td>
+	<td colspan="2" rowspan="1" style="width: 221px;"><span style="font-size:14px;">${item.description}</span></td>
+	<td><span style="font-size:14px;">${item.inventorydetail}</span></td>
+	<td><span style="font-size:14px;">${item.quantity@label}</span></td>
+	<td><span style="font-size:14px;">${item.units}</span></td>
+	<td><span style="font-size:14px;">${item.quantitycommitted}</span></td>
+	</tr>
+	</#list><!-- end items --></table>
+</#if>
+
+<table class="footer" style="width: 100%;"><tr>
+	<td>&nbsp;</td>
+	</tr>
+	<tr>
+	<td>&nbsp;</td>
+	</tr>
+	<tr>
+	<td>&nbsp;</td>
+	</tr>
+	<tr>
+	<td width="33%">&nbsp;</td>
+	<td width="33%">&nbsp;</td>
+	<td width="33%">&nbsp;</td>
+	</tr>
+	<tr>
+      <td align="left" style="font-size: 12px" width="33%">倉儲人員：<br/><span style="font-size:10px;">Warehouse Personnel</span></td>
+      <td align="left" style="font-size: 12px" width="33%">執行人員：<br/><span style="font-size:10px;">Executor</span></td>
+	</tr></table>
+</body>
+</pdf>
